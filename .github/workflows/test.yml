@@ -1,0 +1,19 @@
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode
+        run: xcodebuild -version
+      - name: Test
+        run: |
+          set -o pipefail
+          DEST=$(xcrun simctl list devices available | grep -m1 -oE 'iPhone [^(]+\(' | sed 's/ ($//')
+          xcodebuild test -project Daybreak.xcodeproj -scheme Daybreak \
+            -destination "platform=iOS Simulator,name=$DEST" \
+            CODE_SIGNING_ALLOWED=NO

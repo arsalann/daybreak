@@ -1,0 +1,4 @@
+// Shared build settings. Signing lives in the git-ignored Local.xcconfig.
+BUNDLE_ID_PREFIX = org.example
+DEVELOPMENT_TEAM =
+#include? "Local.xcconfig"
