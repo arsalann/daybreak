@@ -9,7 +9,7 @@ A private, native iOS alarm clock with a little rhythm. Set a regular alarm, or 
 - Wheel and interactive analog clock pickers, labels, one-off alarms, and weekday repeats.
 - Fibonacci, 5-minute, and 10-minute presets with a lead-in window; custom intervals before/after/both; fully manual children.
 - Individual child time, label, sound, and enabled state. Preview, duplicate-time validation, 20-alarm limit, and small-gap warnings.
-- System sound plus three original bundled tones with previews.
+- Sounds with previews: five classic clock sounds, the iPhone default alarm, three original Daybreak tones, and Random.
 - Configurable snooze for regular alarms. Target alarms offer **I'm up** to cancel the remaining alarms in that occurrence; **Stop** silences only the current alarm.
 - AlarmKit authorization, actionable error/retry states, and local JSON persistence with stable system alarm IDs.
 - Dark charcoal and warm amber interface, onboarding, settings, and an original sunrise icon.
