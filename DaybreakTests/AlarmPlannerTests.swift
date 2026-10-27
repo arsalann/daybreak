@@ -183,6 +183,26 @@ struct AlarmModelTests {
             #expect(Bundle(for: FakeAlarmClient.self).url(forResource: sound.filename, withExtension: nil) != nil || Bundle.main.url(forResource: sound.filename, withExtension: nil) != nil)
         }
     }
+    @Test func versionOneDocumentReschedulesAlarmsWithReplacedSounds() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        var group = AlarmGroup(repeatDays: [2])
+        group.sound = .glow
+        #expect(await model.save(group))
+        let id = try #require(model.document.records.first?.id)
+        var old = model.document
+        old.version = 1
+        let json = try String(decoding: JSONEncoder().encode(old), as: UTF8.self).replacingOccurrences(of: "\"glow\"", with: "\"chime\"")
+        try Data(json.utf8).write(to: store.url)
+        let migrated = AlarmModel(store: store, client: client)
+        migrated.authorization = .authorized
+        #expect(migrated.document.version == 2)
+        #expect(migrated.groups.first?.sound == .glow)
+        client.scheduled = []
+        #expect(await migrated.reconcile())
+        #expect(client.scheduled == [id])
+        #expect(try store.load().records.allSatisfy(\.confirmed))
+    }
     @Test func repeatingRandomAlarmIsRescheduledAfterItRings() async throws {
         let (model, client, store) = setup()
         defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
