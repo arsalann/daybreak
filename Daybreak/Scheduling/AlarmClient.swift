@@ -48,7 +48,7 @@ final class LiveAlarmClient: AlarmClient {
         let config = AlarmManager.AlarmConfiguration.alarm(schedule: schedule, attributes: attributes,
             stopIntent: nil,
             secondaryIntent: plan.action == .none ? nil : AlarmActionIntent(alarmID: id),
-            sound: plan.sound.filename.map { .named($0) } ?? .default)
+            sound: plan.sound.resolved().filename.map { .named($0) } ?? .default)
         _ = try await AlarmManager.shared.schedule(id: id, configuration: config)
     }
     @available(iOS, deprecated: 26.1)

@@ -27,10 +27,12 @@ enum SequencePreset: String, Codable, CaseIterable, Identifiable {
 }
 
 enum AlarmSound: String, Codable, CaseIterable, Identifiable {
-    case system, daybreak, chime, pulse
+    case system, daybreak, chime, pulse, random
     var id: Self { self }
     var title: String { rawValue.capitalized }
-    var filename: String? { self == .system ? nil : "\(rawValue).wav" }
+    var filename: String? { self == .system || self == .random ? nil : "\(rawValue).wav" }
+    /// Random picks a fresh concrete sound every time the alarm is handed to AlarmKit.
+    func resolved() -> AlarmSound { self == .random ? Self.allCases.filter { $0 != .random }.randomElement()! : self }
 }
 
 struct ChildAlarm: Codable, Identifiable, Hashable {

@@ -172,6 +172,27 @@ struct AlarmModelTests {
         #expect(client.cancelled == [orphan])
         #expect(client.plans[orphan] == nil)
     }
+    @Test func randomSoundResolvesToConcreteSound() {
+        for _ in 0..<20 { #expect(AlarmSound.random.resolved() != .random) }
+        #expect(AlarmSound.chime.resolved() == .chime)
+    }
+    @Test func repeatingRandomAlarmIsRescheduledAfterItRings() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        var group = AlarmGroup(repeatDays: [1, 2, 3, 4, 5, 6, 7])
+        group.sound = .random
+        let start = Date.now
+        #expect(await model.save(group))
+        let id = try #require(model.document.records.first?.id)
+        client.scheduled = []
+        #expect(await model.reconcile(now: start))
+        #expect(client.scheduled.isEmpty)
+        #expect(await model.reconcile(now: start.addingTimeInterval(2 * 86400)))
+        #expect(client.scheduled == [id])
+        client.scheduled = []
+        #expect(await model.reconcile(now: start.addingTimeInterval(2 * 86400)))
+        #expect(client.scheduled.isEmpty)
+    }
     @Test func cancelFailureKeepsGroupVisible() async throws {
         let (model, client, store) = setup()
         defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
