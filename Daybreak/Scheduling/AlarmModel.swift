@@ -151,6 +151,7 @@ final class AlarmModel {
                 }
             }
             let diff = ReconciliationDiff(desired: desired, records: document.records, liveIDs: liveIDs)
+            let known = Set(document.records.map(\.id))
             // Free system slots first: AlarmKit caps alarms per app (error code 0, maximumLimitReached).
             for record in diff.removals {
                 if liveIDs.contains(record.id) { try client.cancel(id: record.id) }
@@ -158,7 +159,6 @@ final class AlarmModel {
                 try persist()
             }
             // Alarms the system holds that no record knows about (e.g. from an earlier failed sync) are orphans.
-            let known = Set(document.records.map(\.id))
             for id in liveIDs.subtracting(known).subtracting(ringingIDs) { try client.cancel(id: id) }
             for plan in diff.upserts {
                 let index = document.records.firstIndex { $0.plan.id == plan.id }
