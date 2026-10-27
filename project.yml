@@ -16,8 +16,7 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
     GENERATE_INFOPLIST_FILE: YES
     INFOPLIST_KEY_UILaunchScreen_Generation: YES
-    INFOPLIST_KEY_UIRequiresFullScreen: YES
-    INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+    INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
     ENABLE_USER_SCRIPT_SANDBOXING: YES
 targets:
   Daybreak:

@@ -35,7 +35,7 @@ A simple iOS alarm clock with two niche features. It always shows how long until
 - [Technical requirements / build guide](technical-requirements.md)
 - [Open questions (with defaults)](open-questions.md)
 - Naming history: in the source planning repo, not copied
-- Session handoff: `.context/alarm-app/handoff.md` (gitignored)
+- Session handoff: `.context/daybreak/handoff.md` in the app repo (gitignored)
 
 ## Naming preference
 Names must be easy to say and remember. Use familiar words with an interesting story; avoid awkward invented blends. Round 3 was rejected for being too weird. Daybreak was selected on 2026-10-26; see the naming history in the source planning repo.

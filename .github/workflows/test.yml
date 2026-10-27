@@ -5,15 +5,27 @@ on:
   pull_request:
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
-      - name: Show Xcode
-        run: xcodebuild -version
+      - name: Select newest Xcode
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
       - name: Test
         run: |
           set -o pipefail
-          DEST=$(xcrun simctl list devices available | grep -m1 -oE 'iPhone [^(]+\(' | sed 's/ ($//')
+          # First available iPhone on an iOS 26+ runtime (the deployment target).
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          for runtime in sorted(devices, reverse=True):
+              if "iOS-" in runtime and int(runtime.split("iOS-")[1].split("-")[0]) >= 26:
+                  for d in devices[runtime]:
+                      if d["name"].startswith("iPhone"):
+                          print(d["udid"]); sys.exit()
+          sys.exit("no iOS 26+ iPhone simulator")')
           xcodebuild test -project Daybreak.xcodeproj -scheme Daybreak \
-            -destination "platform=iOS Simulator,name=$DEST" \
+            -destination "id=$UDID" \
             CODE_SIGNING_ALLOWED=NO
