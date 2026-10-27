@@ -150,6 +150,10 @@ final class AlarmModel {
                     desired.append(record.plan)
                 }
             }
+            for index in document.records.indices
+            where !ringingIDs.contains(document.records[index].id) && document.records[index].needsNewRandomSound(now: now, calendar: .current) {
+                document.records[index].confirmed = false
+            }
             let diff = ReconciliationDiff(desired: desired, records: document.records, liveIDs: liveIDs)
             let known = Set(document.records.map(\.id))
             // Free system slots first: AlarmKit caps alarms per app (error code 0, maximumLimitReached).
@@ -163,7 +167,7 @@ final class AlarmModel {
             for plan in diff.upserts {
                 let index = document.records.firstIndex { $0.plan.id == plan.id }
                 let id = index.map { document.records[$0].id } ?? UUID()
-                let record = ScheduledRecord(id: id, plan: plan, confirmed: false)
+                let record = ScheduledRecord(id: id, plan: plan, confirmed: false, scheduledAt: now)
                 if let index { document.records[index] = record } else { document.records.append(record) }
                 try persist() // Write-ahead ID: a crash cannot orphan an alarm in the system.
                 // Replace rather than re-schedule an ID the system already holds.

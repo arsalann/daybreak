@@ -34,6 +34,14 @@ struct ScheduledRecord: Codable, Hashable, Identifiable {
     var id: UUID
     var plan: PlannedAlarm
     var confirmed = true
+    var scheduledAt: Date?
+
+    /// A repeating Random alarm keeps one sound per AlarmKit schedule, so re-roll it once it has rung.
+    func needsNewRandomSound(now: Date, calendar: Calendar) -> Bool {
+        guard plan.sound == .random, case .weekly = plan.schedule, let scheduledAt,
+              let fire = plan.nextFire(after: scheduledAt, calendar: calendar) else { return false }
+        return fire <= now
+    }
 }
 
 enum AlarmPlanner {
