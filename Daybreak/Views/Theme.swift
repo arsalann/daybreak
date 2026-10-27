@@ -21,7 +21,10 @@ struct SoundPicker: View {
     var body: some View {
         HStack {
             Picker("Sound", selection: $sound) {
-                ForEach(AlarmSound.allCases) { sound in Text(sound.title).tag(sound) }
+                Section("Classic") { ForEach(AlarmSound.classics) { Text($0.title).tag($0) } }
+                Section("Apple") { Text(AlarmSound.system.title).tag(AlarmSound.system) }
+                Section("Daybreak") { ForEach(AlarmSound.originals) { Text($0.title).tag($0) } }
+                Text(AlarmSound.random.title).tag(AlarmSound.random)
             }
             if sound.filename != nil {
                 Button {

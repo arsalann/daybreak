@@ -88,7 +88,7 @@ struct AlarmPlannerTests {
     @Test func roundTripPreservesIdentitiesAndCustomization() throws {
         var group = AlarmGroup(kind: .target, repeatDays: [2, 3, 4])
         group.applyPreset()
-        group.children[0].sound = .chime
+        group.children[0].sound = .westminster
         group.children[1].isEnabled = false
         group.clockStyle = .dial
         let document = AlarmDocument(groups: [group])
@@ -174,7 +174,34 @@ struct AlarmModelTests {
     }
     @Test func randomSoundResolvesToConcreteSound() {
         for _ in 0..<20 { #expect(AlarmSound.random.resolved() != .random) }
-        #expect(AlarmSound.chime.resolved() == .chime)
+        #expect(AlarmSound.glow.resolved() == .glow)
+    }
+    @Test func retiredSoundsDecodeToCurrentOnes() throws {
+        let decoded = try JSONDecoder().decode([AlarmSound].self, from: Data(#"["chime","pulse","ocean","nonsense","digital"]"#.utf8))
+        #expect(decoded == [.glow, .digital, .glow, .system, .digital])
+        for sound in AlarmSound.allCases where sound.filename != nil {
+            #expect(Bundle(for: FakeAlarmClient.self).url(forResource: sound.filename, withExtension: nil) != nil || Bundle.main.url(forResource: sound.filename, withExtension: nil) != nil)
+        }
+    }
+    @Test func versionOneDocumentReschedulesAlarmsWithReplacedSounds() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        var group = AlarmGroup(repeatDays: [2])
+        group.sound = .glow
+        #expect(await model.save(group))
+        let id = try #require(model.document.records.first?.id)
+        var old = model.document
+        old.version = 1
+        let json = try String(decoding: JSONEncoder().encode(old), as: UTF8.self).replacingOccurrences(of: "\"glow\"", with: "\"chime\"")
+        try Data(json.utf8).write(to: store.url)
+        let migrated = AlarmModel(store: store, client: client)
+        migrated.authorization = .authorized
+        #expect(migrated.document.version == 2)
+        #expect(migrated.groups.first?.sound == .glow)
+        client.scheduled = []
+        #expect(await migrated.reconcile())
+        #expect(client.scheduled == [id])
+        #expect(try store.load().records.allSatisfy(\.confirmed))
     }
     @Test func repeatingRandomAlarmIsRescheduledAfterItRings() async throws {
         let (model, client, store) = setup()

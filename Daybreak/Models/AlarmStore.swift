@@ -1,7 +1,8 @@
 import Foundation
 
 struct AlarmDocument: Codable {
-    var version = 1
+    static let currentVersion = 2
+    var version = currentVersion
     var groups: [AlarmGroup] = []
     var records: [ScheduledRecord] = []
     var snoozes: [PlannedAlarm] = []
@@ -15,8 +16,13 @@ struct AlarmStore {
     }
     func load() throws -> AlarmDocument {
         guard FileManager.default.fileExists(atPath: url.path) else { return AlarmDocument() }
-        let document = try JSONDecoder().decode(AlarmDocument.self, from: Data(contentsOf: url))
-        guard document.version == 1 else { throw CocoaError(.fileReadUnknown) }
+        var document = try JSONDecoder().decode(AlarmDocument.self, from: Data(contentsOf: url))
+        guard (1...AlarmDocument.currentVersion).contains(document.version) else { throw CocoaError(.fileReadUnknown) }
+        if document.version < 2 {
+            // Version 2 replaced the bundled tones. Re-schedule so AlarmKit stops pointing at deleted sound files.
+            for index in document.records.indices { document.records[index].confirmed = false }
+            document.version = 2
+        }
         return document
     }
     func save(_ document: AlarmDocument) throws {

@@ -27,9 +27,29 @@ enum SequencePreset: String, Codable, CaseIterable, Identifiable {
 }
 
 enum AlarmSound: String, Codable, CaseIterable, Identifiable {
-    case system, daybreak, chime, pulse, bells, marimba, sunrise, harp, classic, beacon, birdsong, ocean, random
+    case twinbell, digital, buzzer, cuckoo, westminster
+    case system
+    case sunrise, morning, glow
+    case random
     var id: Self { self }
-    var title: String { rawValue.capitalized }
+    var title: String {
+        switch self {
+        case .twinbell: "Twin Bell"
+        case .system: "iPhone Default"
+        case .morning: "Good Morning"
+        default: rawValue.capitalized
+        }
+    }
+    static let classics: [AlarmSound] = [.twinbell, .digital, .buzzer, .cuckoo, .westminster]
+    static let originals: [AlarmSound] = [.sunrise, .morning, .glow]
+
+    init(from decoder: Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        // Earlier builds shipped other tones; map them so saved alarms still load.
+        let renamed = ["daybreak": "sunrise", "chime": "glow", "pulse": "digital", "bells": "westminster", "marimba": "morning",
+                       "harp": "glow", "classic": "digital", "beacon": "digital", "birdsong": "cuckoo", "ocean": "glow"]
+        self = AlarmSound(rawValue: renamed[raw] ?? raw) ?? .system
+    }
     var filename: String? { self == .system || self == .random ? nil : "\(rawValue).wav" }
     /// Random picks a fresh concrete sound every time the alarm is handed to AlarmKit.
     func resolved() -> AlarmSound { self == .random ? Self.allCases.filter { $0 != .random }.randomElement()! : self }
