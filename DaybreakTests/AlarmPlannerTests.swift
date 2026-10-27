@@ -144,7 +144,8 @@ struct AlarmModelTests {
         #expect(await model.save(group))
         #expect(client.scheduled.count == 1)
         #expect(Set(client.plans.keys) == originalIDs)
-        #expect(client.cancelled.isEmpty)
+        // The edited alarm is replaced in place: cancelled, then re-scheduled under the same ID.
+        #expect(client.cancelled == client.scheduled)
         #expect(await model.delete(group))
         #expect(client.plans.isEmpty)
         #expect(try store.load().groups.isEmpty)
@@ -161,6 +162,15 @@ struct AlarmModelTests {
         #expect(await model.reconcile())
         #expect(client.scheduled == [reservedID])
         #expect(model.errorMessage == nil)
+    }
+    @Test func orphanedSystemAlarmsAreCancelled() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        let orphan = UUID()
+        client.plans[orphan] = PlannedAlarm(id: "orphan", groupID: UUID(), offset: 0, title: "Lost", schedule: .fixed(.now.addingTimeInterval(3600)), sound: .system, snoozeMinutes: 9, action: .none)
+        #expect(await model.save(AlarmGroup()))
+        #expect(client.cancelled == [orphan])
+        #expect(client.plans[orphan] == nil)
     }
     @Test func cancelFailureKeepsGroupVisible() async throws {
         let (model, client, store) = setup()
