@@ -26,6 +26,9 @@ struct SoundPicker: View {
             if sound.filename != nil {
                 Button {
                     guard let name = sound.filename, let url = Bundle.main.url(forResource: name, withExtension: nil) else { return }
+                    // The default ambient session is muted by the Silent switch; previews should be audible.
+                    try? AVAudioSession.sharedInstance().setCategory(.playback)
+                    try? AVAudioSession.sharedInstance().setActive(true)
                     player = try? AVAudioPlayer(contentsOf: url)
                     player?.play()
                 } label: { Image(systemName: "play.circle.fill").font(.title3) }

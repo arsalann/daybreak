@@ -27,7 +27,7 @@ enum SequencePreset: String, Codable, CaseIterable, Identifiable {
 }
 
 enum AlarmSound: String, Codable, CaseIterable, Identifiable {
-    case system, daybreak, chime, pulse, random
+    case system, daybreak, chime, pulse, bells, marimba, sunrise, harp, classic, beacon, birdsong, ocean, random
     var id: Self { self }
     var title: String { rawValue.capitalized }
     var filename: String? { self == .system || self == .random ? nil : "\(rawValue).wav" }
