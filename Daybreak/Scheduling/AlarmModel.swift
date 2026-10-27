@@ -151,26 +151,32 @@ final class AlarmModel {
                 }
             }
             let diff = ReconciliationDiff(desired: desired, records: document.records, liveIDs: liveIDs)
+            // Free system slots first: AlarmKit caps alarms per app (error code 0, maximumLimitReached).
+            for record in diff.removals {
+                if liveIDs.contains(record.id) { try client.cancel(id: record.id) }
+                document.records.removeAll { $0.id == record.id }
+                try persist()
+            }
+            // Alarms the system holds that no record knows about (e.g. from an earlier failed sync) are orphans.
+            let known = Set(document.records.map(\.id))
+            for id in liveIDs.subtracting(known).subtracting(ringingIDs) { try client.cancel(id: id) }
             for plan in diff.upserts {
                 let index = document.records.firstIndex { $0.plan.id == plan.id }
                 let id = index.map { document.records[$0].id } ?? UUID()
                 let record = ScheduledRecord(id: id, plan: plan, confirmed: false)
                 if let index { document.records[index] = record } else { document.records.append(record) }
                 try persist() // Write-ahead ID: a crash cannot orphan an alarm in the system.
+                // Replace rather than re-schedule an ID the system already holds.
+                if liveIDs.contains(id) && !ringingIDs.contains(id) { try client.cancel(id: id) }
                 try await client.schedule(id: id, plan: plan)
                 if let index = document.records.firstIndex(where: { $0.id == id }) { document.records[index].confirmed = true }
-                try persist()
-            }
-            for record in diff.removals {
-                if liveIDs.contains(record.id) { try client.cancel(id: record.id) }
-                document.records.removeAll { $0.id == record.id }
                 try persist()
             }
             try persist()
             errorMessage = nil
             return true
         } catch {
-            errorMessage = "Your changes are saved, but some alarms could not be synced. Tap Retry before relying on them. \(error.localizedDescription)"
+            errorMessage = "Your changes are saved, but some alarms could not be synced. Tap Retry before relying on them. \(Self.describe(error))"
             return false
         }
     }
@@ -205,6 +211,14 @@ final class AlarmModel {
             guard await reconcile() else { throw AlarmActionError.sync }
             Self.requestBackgroundRefresh(after: target.addingTimeInterval(Double(group.offsets.last?.minutes ?? 0) * 60 + 120))
         }
+    }
+
+    static func describe(_ error: Error) -> String {
+        if let alarmError = error as? AlarmManager.AlarmError, case .maximumLimitReached = alarmError {
+            return "iOS limits how many alarms one app can schedule. Turn off or shorten some alarm sequences."
+        }
+        let ns = error as NSError
+        return "\(ns.localizedDescription) (\(ns.domain) \(ns.code))"
     }
 
     static var backgroundID: String { (Bundle.main.bundleIdentifier ?? "org.example.daybreak") + ".refresh" }
