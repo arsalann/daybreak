@@ -8,17 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		059F85EC51C7491F77A9AA18 /* SpikeMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE577CE8AE8DDC4D4D237BBB /* SpikeMetadata.swift */; };
+		0E809F77BFB1360C4649BAB0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46BEC053A5C6112E680029B6 /* LICENSE.txt */; };
+		16462A0BB1AEF139180845CA /* AlarmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DC5F75095230A54268FDED /* AlarmClient.swift */; };
+		1778B826C399DD56AE859C19 /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23DAF0F2C8DD428225F1160 /* AlarmModel.swift */; };
 		1EF9F8CCD86B63256B9D6CD6 /* DaybreakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48336AD36579DEDE2B340B5B /* DaybreakApp.swift */; };
 		2AF69479954162CCB1B887AC /* SpikeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8E1123CC99AF285D76491 /* SpikeLog.swift */; };
 		2DFA393856CC23E0BACB9DC5 /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9BDBA3366B489CF5E1C7FD /* ScheduleMapper.swift */; };
 		394466A0475A29C4E9352B0C /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9BDBA3366B489CF5E1C7FD /* ScheduleMapper.swift */; };
+		3AE432D774A29C6925EF6F1F /* AlarmPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066A0789197F53BBD433A57 /* AlarmPlanner.swift */; };
+		4C0ADCF36A8844386C9D52F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759DC79869308470E9D29077 /* SettingsView.swift */; };
 		4FEA96B74529259878F9337C /* SequenceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C59D5FC7BE3C41E148DFD1 /* SequenceGenerator.swift */; };
+		6612AC02292CC96816CE6491 /* AlarmEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89FA2084599B26BA91AC691 /* AlarmEditorView.swift */; };
+		6BD28E3370041F32CE1D49DD /* ChildEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A4E97E193B37C5A579B96A /* ChildEditorView.swift */; };
+		6E583D831741FAA0969D71CD /* ClockPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC5406A138146599FF75E63 /* ClockPicker.swift */; };
+		816568AF4D9438269123C8DD /* AlarmGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCFAD714E708C34605257A /* AlarmGroup.swift */; };
 		8F0344691A06E7785E3BD145 /* SequenceGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D9EAB5828AC69E997D5E8 /* SequenceGeneratorTests.swift */; };
+		96872063808399A80CEB42B9 /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 39AA3D4DF745185D04326FF2 /* chime.wav */; };
+		981DB37C3FA1F058724A31C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AA3EE879499C20808EBA69 /* Theme.swift */; };
+		9895CA7C85D5760C053E6CF1 /* daybreak.wav in Resources */ = {isa = PBXBuildFile; fileRef = D126A7506E13CCD6E57E9102 /* daybreak.wav */; };
 		A9E0FF1BF1C0870041C03BED /* SpikeImUpIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519CBA344DE01A001CEFC04F /* SpikeImUpIntent.swift */; };
+		AA6E58F869A321A8733B43F1 /* pulse.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6C5D6B46AE021E20313EF1AD /* pulse.wav */; };
+		B9E8520DC44A9FCB045DAC6E /* AlarmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B32D0E980D3DBB16007534 /* AlarmListView.swift */; };
 		BC568ACC985CE318EEB3777D /* SequenceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C59D5FC7BE3C41E148DFD1 /* SequenceGenerator.swift */; };
+		C42537FD9528A8AA8E5E857E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BADE1E8ACB4660091E44907 /* Assets.xcassets */; };
+		D0EDA2C6E991ED78877CFED1 /* AlarmPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5B7863069AFB2B0023F75 /* AlarmPlannerTests.swift */; };
 		D3CEC95D6D8648209899936E /* SpikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603EF67CA7B8948AAA9B353 /* SpikeApp.swift */; };
 		E3D72D0F23CFCF348406DD7C /* ScheduleMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26E97FF0B525D8387D89A7 /* ScheduleMapperTests.swift */; };
+		E479375C1FBC8F2E6723A74A /* AlarmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2799A7F929BB530942A8B2D8 /* AlarmStore.swift */; };
 		E89992D4EA8D00B5E424B938 /* SpikeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBA4FB9739A5F1C03F3F02 /* SpikeScheduler.swift */; };
+		ED3624B6DC2E006B6BF672EA /* AlarmActionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F3206353EA533C377237AB /* AlarmActionIntent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,37 +50,76 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2799A7F929BB530942A8B2D8 /* AlarmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmStore.swift; sourceTree = "<group>"; };
+		2BADE1E8ACB4660091E44907 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35B5EC4A5958EC7E719A1C57 /* DaybreakSpike.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DaybreakSpike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C59D5FC7BE3C41E148DFD1 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
+		39AA3D4DF745185D04326FF2 /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
+		40F3206353EA533C377237AB /* AlarmActionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmActionIntent.swift; sourceTree = "<group>"; };
+		468C44FBA314C03AB6097C56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		46BEC053A5C6112E680029B6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		48336AD36579DEDE2B340B5B /* DaybreakApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaybreakApp.swift; sourceTree = "<group>"; };
 		519CBA344DE01A001CEFC04F /* SpikeImUpIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikeImUpIntent.swift; sourceTree = "<group>"; };
+		51A4E97E193B37C5A579B96A /* ChildEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildEditorView.swift; sourceTree = "<group>"; };
+		59FCFAD714E708C34605257A /* AlarmGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmGroup.swift; sourceTree = "<group>"; };
 		5FFBA4FB9739A5F1C03F3F02 /* SpikeScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikeScheduler.swift; sourceTree = "<group>"; };
 		6AB8E1123CC99AF285D76491 /* SpikeLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikeLog.swift; sourceTree = "<group>"; };
+		6C5D6B46AE021E20313EF1AD /* pulse.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pulse.wav; sourceTree = "<group>"; };
+		6FC5406A138146599FF75E63 /* ClockPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockPicker.swift; sourceTree = "<group>"; };
+		759DC79869308470E9D29077 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8066A0789197F53BBD433A57 /* AlarmPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanner.swift; sourceTree = "<group>"; };
 		851D9EAB5828AC69E997D5E8 /* SequenceGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGeneratorTests.swift; sourceTree = "<group>"; };
+		A0B32D0E980D3DBB16007534 /* AlarmListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListView.swift; sourceTree = "<group>"; };
+		A23DAF0F2C8DD428225F1160 /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
 		A603EF67CA7B8948AAA9B353 /* SpikeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikeApp.swift; sourceTree = "<group>"; };
+		A89FA2084599B26BA91AC691 /* AlarmEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditorView.swift; sourceTree = "<group>"; };
+		ADC5B7863069AFB2B0023F75 /* AlarmPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlannerTests.swift; sourceTree = "<group>"; };
+		B1F2E47856BF5EAC34A95B63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BA26E97FF0B525D8387D89A7 /* ScheduleMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMapperTests.swift; sourceTree = "<group>"; };
 		C14E88A016A8E80548E9F161 /* DaybreakTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DaybreakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE577CE8AE8DDC4D4D237BBB /* SpikeMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikeMetadata.swift; sourceTree = "<group>"; };
+		D126A7506E13CCD6E57E9102 /* daybreak.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = daybreak.wav; sourceTree = "<group>"; };
 		DB9BDBA3366B489CF5E1C7FD /* ScheduleMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMapper.swift; sourceTree = "<group>"; };
 		E4615F87977DBB555DBEAE31 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		F2AA3EE879499C20808EBA69 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F5A017B066624F43A65BC682 /* Daybreak.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Daybreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6DC5F75095230A54268FDED /* AlarmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		13692A85D770774532A92C60 /* DaybreakTests */ = {
 			isa = PBXGroup;
 			children = (
+				ADC5B7863069AFB2B0023F75 /* AlarmPlannerTests.swift */,
 				BA26E97FF0B525D8387D89A7 /* ScheduleMapperTests.swift */,
 				851D9EAB5828AC69E997D5E8 /* SequenceGeneratorTests.swift */,
 			);
 			path = DaybreakTests;
 			sourceTree = "<group>";
 		};
+		1785E131CDFF509474FAD369 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2BADE1E8ACB4660091E44907 /* Assets.xcassets */,
+				39AA3D4DF745185D04326FF2 /* chime.wav */,
+				D126A7506E13CCD6E57E9102 /* daybreak.wav */,
+				46BEC053A5C6112E680029B6 /* LICENSE.txt */,
+				6C5D6B46AE021E20313EF1AD /* pulse.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		51A7182A6515A45AC4D55A32 /* Daybreak */ = {
 			isa = PBXGroup;
 			children = (
+				B1F2E47856BF5EAC34A95B63 /* Info.plist */,
 				A5555922A85E2ADBF707A1ED /* App */,
 				5FEC8B59F329B039B7701B75 /* Generation */,
+				8C0C0913BFD693531EB4C4E6 /* Intents */,
+				C8B6DD896784D196BAA7AEF8 /* Models */,
+				1785E131CDFF509474FAD369 /* Resources */,
+				BFEC09289B9294AE725443BC /* Scheduling */,
+				97069104A45FE07C61207CFA /* Views */,
 			);
 			path = Daybreak;
 			sourceTree = "<group>";
@@ -87,6 +144,27 @@
 			);
 			sourceTree = "<group>";
 		};
+		8C0C0913BFD693531EB4C4E6 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				40F3206353EA533C377237AB /* AlarmActionIntent.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		97069104A45FE07C61207CFA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A89FA2084599B26BA91AC691 /* AlarmEditorView.swift */,
+				A0B32D0E980D3DBB16007534 /* AlarmListView.swift */,
+				51A4E97E193B37C5A579B96A /* ChildEditorView.swift */,
+				6FC5406A138146599FF75E63 /* ClockPicker.swift */,
+				759DC79869308470E9D29077 /* SettingsView.swift */,
+				F2AA3EE879499C20808EBA69 /* Theme.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9FB5F5ACE58EA1DACBE9AD91 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +186,7 @@
 		B8C9CC0AB9AE9A23E7DA543C /* Spike */ = {
 			isa = PBXGroup;
 			children = (
+				468C44FBA314C03AB6097C56 /* Info.plist */,
 				A603EF67CA7B8948AAA9B353 /* SpikeApp.swift */,
 				519CBA344DE01A001CEFC04F /* SpikeImUpIntent.swift */,
 				6AB8E1123CC99AF285D76491 /* SpikeLog.swift */,
@@ -115,6 +194,25 @@
 				5FFBA4FB9739A5F1C03F3F02 /* SpikeScheduler.swift */,
 			);
 			path = Spike;
+			sourceTree = "<group>";
+		};
+		BFEC09289B9294AE725443BC /* Scheduling */ = {
+			isa = PBXGroup;
+			children = (
+				F6DC5F75095230A54268FDED /* AlarmClient.swift */,
+				A23DAF0F2C8DD428225F1160 /* AlarmModel.swift */,
+				8066A0789197F53BBD433A57 /* AlarmPlanner.swift */,
+			);
+			path = Scheduling;
+			sourceTree = "<group>";
+		};
+		C8B6DD896784D196BAA7AEF8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59FCFAD714E708C34605257A /* AlarmGroup.swift */,
+				2799A7F929BB530942A8B2D8 /* AlarmStore.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DF16835D0516FD71EEB9F3FE /* Config */ = {
@@ -168,6 +266,7 @@
 			buildConfigurationList = DBD3117098F429C7764FD36A /* Build configuration list for PBXNativeTarget "Daybreak" */;
 			buildPhases = (
 				0862A18EA28155C099F5B854 /* Sources */,
+				73A14E2D358EDDFEF985F5A2 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -224,14 +323,41 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		73A14E2D358EDDFEF985F5A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C42537FD9528A8AA8E5E857E /* Assets.xcassets in Resources */,
+				0E809F77BFB1360C4649BAB0 /* LICENSE.txt in Resources */,
+				96872063808399A80CEB42B9 /* chime.wav in Resources */,
+				9895CA7C85D5760C053E6CF1 /* daybreak.wav in Resources */,
+				AA6E58F869A321A8733B43F1 /* pulse.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0862A18EA28155C099F5B854 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3624B6DC2E006B6BF672EA /* AlarmActionIntent.swift in Sources */,
+				16462A0BB1AEF139180845CA /* AlarmClient.swift in Sources */,
+				6612AC02292CC96816CE6491 /* AlarmEditorView.swift in Sources */,
+				816568AF4D9438269123C8DD /* AlarmGroup.swift in Sources */,
+				B9E8520DC44A9FCB045DAC6E /* AlarmListView.swift in Sources */,
+				1778B826C399DD56AE859C19 /* AlarmModel.swift in Sources */,
+				3AE432D774A29C6925EF6F1F /* AlarmPlanner.swift in Sources */,
+				E479375C1FBC8F2E6723A74A /* AlarmStore.swift in Sources */,
+				6BD28E3370041F32CE1D49DD /* ChildEditorView.swift in Sources */,
+				6E583D831741FAA0969D71CD /* ClockPicker.swift in Sources */,
 				1EF9F8CCD86B63256B9D6CD6 /* DaybreakApp.swift in Sources */,
 				2DFA393856CC23E0BACB9DC5 /* ScheduleMapper.swift in Sources */,
 				4FEA96B74529259878F9337C /* SequenceGenerator.swift in Sources */,
+				4C0ADCF36A8844386C9D52F6 /* SettingsView.swift in Sources */,
+				981DB37C3FA1F058724A31C7 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0EDA2C6E991ED78877CFED1 /* AlarmPlannerTests.swift in Sources */,
 				E3D72D0F23CFCF348406DD7C /* ScheduleMapperTests.swift in Sources */,
 				8F0344691A06E7785E3BD145 /* SequenceGeneratorTests.swift in Sources */,
 			);
@@ -274,15 +401,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Daybreak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Daybreak;
-				INFOPLIST_KEY_NSAlarmKitUsageDescription = "Daybreak schedules the wake-up alarms you create so they ring even in Silent mode or Focus.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).daybreak";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -291,8 +418,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Spike/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Daybreak M0";
-				INFOPLIST_KEY_NSAlarmKitUsageDescription = "The Daybreak M0 spike schedules test alarms to check AlarmKit reliability.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -398,8 +525,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Spike/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Daybreak M0";
-				INFOPLIST_KEY_NSAlarmKitUsageDescription = "The Daybreak M0 spike schedules test alarms to check AlarmKit reliability.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -481,15 +608,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Daybreak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Daybreak;
-				INFOPLIST_KEY_NSAlarmKitUsageDescription = "Daybreak schedules the wake-up alarms you create so they ring even in Silent mode or Focus.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).daybreak";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
