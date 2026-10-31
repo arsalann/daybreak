@@ -26,6 +26,11 @@ struct PlannedAlarm: Codable, Hashable, Identifiable {
     var snoozeMinutes: Int
     var action: RingAction
     func nextFire(after now: Date, calendar: Calendar) -> Date? { schedule.nextFire(after: now, calendar: calendar) }
+    /// The most recent time this alarm was due, if it was within `window` seconds before `now`.
+    func lastFire(atOrBefore now: Date, within window: TimeInterval, calendar: Calendar) -> Date? {
+        guard let fire = nextFire(after: now.addingTimeInterval(-window), calendar: calendar), fire <= now else { return nil }
+        return fire
+    }
 }
 
 enum RingAction: String, Codable { case none, snooze, imUp }

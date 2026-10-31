@@ -12,6 +12,7 @@ struct SettingsView: View {
                     LabeledContent("Alarm access", value: model.authorization == .authorized ? "Allowed" : "Not allowed")
                     Link("Open system settings", destination: URL(string: UIApplication.openSettingsURLString)!)
                     Stepper("Warn below \(gapWarning) min gaps", value: $gapWarning, in: 1...10)
+                    NavigationLink("Activity log") { ActivityLogView() }
                 }
                 Section("How it works") {
                     Text("Regular alarms ring once, or on your selected weekdays. Snooze adds another ring after your chosen delay.")
@@ -82,6 +83,29 @@ struct WelcomeView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title).font(.subheadline.weight(.semibold))
                 Text(detail).font(.subheadline).foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+/// Shows what Daybreak scheduled, cancelled and saw ringing. Useful when an alarm rings unexpectedly.
+struct ActivityLogView: View {
+    @State private var text = AlarmLog.read()
+    var body: some View {
+        ScrollView {
+            Text(text.isEmpty ? "No activity yet." : text)
+                .font(.system(.caption2, design: .monospaced)).textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading).padding(16)
+        }
+        .defaultScrollAnchor(.bottom)
+        .background(Color.canvas)
+        .navigationTitle("Activity log").navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    ShareLink(item: text.isEmpty ? "No activity yet." : text, subject: Text("Daybreak activity log"))
+                    Button("Clear log", role: .destructive) { AlarmLog.clear(); text = "" }
+                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("Log options")
             }
         }
     }

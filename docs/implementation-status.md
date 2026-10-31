@@ -29,3 +29,17 @@ Run the existing physical-device spike and record actual audible times. Check Si
 Repeating I'm up retains the original plan's background-execution limitation: a fixed bridge covers the skipped weekday next week, then full weekly restoration needs an app/background run. The UI and README tell users to reopen within a week. This needs further device validation before calling the app production-ready.
 
 One-off fixed dates retain their absolute time after timezone travel; repeating alarms follow local time. Widgets, native countdown Live Activities, and App Store/TestFlight publication remain outside this implementation. No physical-device or store deployment was performed.
+
+## Stray alarm hardening — 2026-10-29
+
+A user with one 10:00 target (60-minute lead-in) heard alarms at about 10:26 PM and at another daytime time. No Daybreak planning path produces those times from that configuration. The likely cause is the AlarmKit misfire reported after cancel-and-reschedule churn (landscape doc, known issue #3). The scheduler used to cancel and reschedule the same ID on every change, the v1→v2 sound migration, Random re-rolls and repeating "I'm up". Changes:
+
+- Every (re)schedule uses a fresh AlarmKit ID, and the old ID is cancelled. IDs are never reused.
+- Orphans (live alarms with no record) are cancelled even while ringing.
+- Mutations are serialized: intents, saves and deletes wait for an in-flight sync instead of failing with "busy", and refreshes requested during a sync are queued, not dropped.
+- Storage load is retried. Before the first unlock after a reboot the protected file is unreadable, which used to leave the model failed for the whole process.
+- Stale or redelivered snooze and "I'm up" intents are ignored unless the alarm is ringing or was due in the last 3 hours. A ringing alarm with no record is stopped.
+- A background refresh is kept pending whenever the app is backgrounded.
+- Settings → Activity log records every schedule, cancel, action and ringing alarm (expected or unexpected), so the next stray alarm can be diagnosed and shared.
+
+Still open: repeating "I'm up" inherently cancels and reschedules the remaining weekly children (suppress, then restore). That is the heaviest remaining churn.
