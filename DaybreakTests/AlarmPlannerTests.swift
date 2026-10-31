@@ -129,7 +129,7 @@ struct AlarmModelTests {
         model.authorization = .authorized
         return (model, client, store)
     }
-    @Test func scheduleEditAndDeleteUseStableIDs() async throws {
+    @Test func scheduleEditAndDeleteTouchOnlyChangedAlarms() async throws {
         let (model, client, store) = setup()
         defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
         var group = AlarmGroup(kind: .target, repeatDays: [2])
@@ -143,24 +143,27 @@ struct AlarmModelTests {
         group.children[0].label = "Just this child"
         #expect(await model.save(group))
         #expect(client.scheduled.count == 1)
-        #expect(Set(client.plans.keys) == originalIDs)
-        // The edited alarm is replaced in place: cancelled, then re-scheduled under the same ID.
-        #expect(client.cancelled == client.scheduled)
+        // The edited alarm is replaced under a fresh ID; AlarmKit misfires when a cancelled ID is reused.
+        #expect(client.cancelled.count == 1)
+        #expect(originalIDs.contains(client.cancelled[0]))
+        #expect(!originalIDs.contains(client.scheduled[0]))
+        #expect(Set(client.plans.keys) == originalIDs.subtracting(client.cancelled).union(client.scheduled))
         #expect(await model.delete(group))
         #expect(client.plans.isEmpty)
         #expect(try store.load().groups.isEmpty)
     }
-    @Test func schedulingFailureIsVisibleAndRetryUsesReservedID() async throws {
+    @Test func schedulingFailureIsVisibleAndRetrySucceeds() async throws {
         let (model, client, store) = setup()
         defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
         client.failSchedule = true
         #expect(await model.save(AlarmGroup()) == false)
         #expect(model.errorMessage != nil)
-        let reservedID = try #require(model.document.records.first?.id)
         #expect(try store.load().records.first?.confirmed == false)
         client.failSchedule = false
         #expect(await model.reconcile())
-        #expect(client.scheduled == [reservedID])
+        #expect(client.scheduled.count == 1)
+        #expect(model.document.records.map(\.id) == client.scheduled)
+        #expect(try store.load().records.first?.confirmed == true)
         #expect(model.errorMessage == nil)
     }
     @Test func orphanedSystemAlarmsAreCancelled() async throws {
@@ -171,6 +174,45 @@ struct AlarmModelTests {
         #expect(await model.save(AlarmGroup()))
         #expect(client.cancelled == [orphan])
         #expect(client.plans[orphan] == nil)
+        // A stray alarm Daybreak has no record of is silenced even while it rings.
+        let ringingOrphan = UUID()
+        client.plans[ringingOrphan] = PlannedAlarm(id: "stray", groupID: UUID(), offset: 0, title: "Stray", schedule: .weekly(hour: 22, minute: 26, days: [3]), sound: .system, snoozeMinutes: 9, action: .none)
+        client.ringing = [ringingOrphan]
+        #expect(await model.reconcile())
+        #expect(client.plans[ringingOrphan] == nil)
+    }
+    @Test func staleRedeliveredActionsAreIgnored() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        var group = AlarmGroup(repeatDays: Set(1...7))
+        let later = Date.now.addingTimeInterval(4 * 3600)
+        group.hour = Calendar.current.component(.hour, from: later)
+        group.minute = Calendar.current.component(.minute, from: later)
+        #expect(await model.save(group))
+        let id = try #require(model.document.records.first?.id)
+        // Not ringing and not due in the last 3 hours: a redelivered snooze must not create a stray alarm.
+        try await model.performAction(alarmID: id)
+        #expect(model.document.snoozes.isEmpty)
+        #expect(client.plans.count == 1)
+    }
+    @Test func actionsWaitForAnInFlightSyncInsteadOfFailing() async throws {
+        let (model, client, store) = setup()
+        defer { try? FileManager.default.removeItem(at: store.url.deletingLastPathComponent()) }
+        #expect(await model.save(AlarmGroup()))
+        let id = try #require(model.document.records.first?.id)
+        client.ringing = [id]
+        model.isBusy = true
+        Task { try? await Task.sleep(for: .milliseconds(200)); model.isBusy = false }
+        try await model.performAction(alarmID: id)
+        #expect(model.document.snoozes.count == 1)
+        #expect(client.ringing.isEmpty)
+    }
+    @Test func lastFireFindsOnlyRecentOccurrences() {
+        let plan = PlannedAlarm(id: "x", groupID: UUID(), offset: 0, title: "", schedule: .weekly(hour: 10, minute: 0, days: [2]), sound: .system, snoozeMinutes: 9, action: .imUp)
+        // 2026-10-26 is a Monday (weekday 2).
+        #expect(plan.lastFire(atOrBefore: instant("2026-10-26T10:20:00Z"), within: 3600, calendar: utc) == instant("2026-10-26T10:00:00Z"))
+        #expect(plan.lastFire(atOrBefore: instant("2026-10-26T09:59:00Z"), within: 3600, calendar: utc) == nil)
+        #expect(plan.lastFire(atOrBefore: instant("2026-10-26T22:26:00Z"), within: 3600, calendar: utc) == nil)
     }
     @Test func randomSoundResolvesToConcreteSound() {
         for _ in 0..<20 { #expect(AlarmSound.random.resolved() != .random) }
@@ -200,7 +242,8 @@ struct AlarmModelTests {
         #expect(migrated.groups.first?.sound == .glow)
         client.scheduled = []
         #expect(await migrated.reconcile())
-        #expect(client.scheduled == [id])
+        #expect(client.scheduled.count == 1)
+        #expect(client.cancelled == [id])
         #expect(try store.load().records.allSatisfy(\.confirmed))
     }
     @Test func repeatingRandomAlarmIsRescheduledAfterItRings() async throws {
@@ -215,7 +258,8 @@ struct AlarmModelTests {
         #expect(await model.reconcile(now: start))
         #expect(client.scheduled.isEmpty)
         #expect(await model.reconcile(now: start.addingTimeInterval(2 * 86400)))
-        #expect(client.scheduled == [id])
+        #expect(client.scheduled.count == 1)
+        #expect(client.cancelled == [id])
         client.scheduled = []
         #expect(await model.reconcile(now: start.addingTimeInterval(2 * 86400)))
         #expect(client.scheduled.isEmpty)

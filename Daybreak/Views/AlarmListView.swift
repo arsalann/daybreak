@@ -56,6 +56,7 @@ struct AlarmListView: View {
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active { Task { await model.refresh() } }
+                if phase == .background { Task { await AlarmModel.ensureBackgroundRefresh() } }
             }
         }
     }

@@ -29,6 +29,7 @@
 		6E583D831741FAA0969D71CD /* ClockPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC5406A138146599FF75E63 /* ClockPicker.swift */; };
 		816568AF4D9438269123C8DD /* AlarmGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCFAD714E708C34605257A /* AlarmGroup.swift */; };
 		8F0344691A06E7785E3BD145 /* SequenceGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D9EAB5828AC69E997D5E8 /* SequenceGeneratorTests.swift */; };
+		90A3ADEE476B25AFC7306792 /* AlarmLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5030502441B16DC13757C9 /* AlarmLog.swift */; };
 		981DB37C3FA1F058724A31C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AA3EE879499C20808EBA69 /* Theme.swift */; };
 		A9E0FF1BF1C0870041C03BED /* SpikeImUpIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519CBA344DE01A001CEFC04F /* SpikeImUpIntent.swift */; };
 		B9E8520DC44A9FCB045DAC6E /* AlarmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B32D0E980D3DBB16007534 /* AlarmListView.swift */; };
@@ -60,6 +61,7 @@
 		2CDDE8841C66098091D043F7 /* morning.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = morning.wav; sourceTree = "<group>"; };
 		35B5EC4A5958EC7E719A1C57 /* DaybreakSpike.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DaybreakSpike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C59D5FC7BE3C41E148DFD1 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
+		3F5030502441B16DC13757C9 /* AlarmLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmLog.swift; sourceTree = "<group>"; };
 		40F3206353EA533C377237AB /* AlarmActionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmActionIntent.swift; sourceTree = "<group>"; };
 		43E9BC0AA771EB51422FF163 /* digital.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = digital.wav; sourceTree = "<group>"; };
 		468C44FBA314C03AB6097C56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				F6DC5F75095230A54268FDED /* AlarmClient.swift */,
+				3F5030502441B16DC13757C9 /* AlarmLog.swift */,
 				A23DAF0F2C8DD428225F1160 /* AlarmModel.swift */,
 				8066A0789197F53BBD433A57 /* AlarmPlanner.swift */,
 			);
@@ -368,6 +371,7 @@
 				6612AC02292CC96816CE6491 /* AlarmEditorView.swift in Sources */,
 				816568AF4D9438269123C8DD /* AlarmGroup.swift in Sources */,
 				B9E8520DC44A9FCB045DAC6E /* AlarmListView.swift in Sources */,
+				90A3ADEE476B25AFC7306792 /* AlarmLog.swift in Sources */,
 				1778B826C399DD56AE859C19 /* AlarmModel.swift in Sources */,
 				3AE432D774A29C6925EF6F1F /* AlarmPlanner.swift in Sources */,
 				E479375C1FBC8F2E6723A74A /* AlarmStore.swift in Sources */,
